@@ -10,4 +10,4 @@
   - map or loop data from database and render it on each activity (rmb to create a const = "SQL SEARCH QUERY HERE")
   - seed some data in the database for u to use
 - [ ] create button in home.jsx file to add new activity. this should insert a record into your db. link  button to /add page
-- [ ] create a delete page `delete.jsx` with same logic as the pattern above
+- [ ] create a delete page `delete.jsx` with same logic as the pattern above# fitnesspro

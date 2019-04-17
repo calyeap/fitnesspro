@@ -78,7 +78,6 @@ app.post('/registration', (request, response) => {
 });
 
 //LOGIN//
-app.post('/login', (request, response) => {
     console.log( request.body );
 
 
@@ -103,6 +102,8 @@ app.post('/login', (request, response) => {
     }
   });
 });
+
+//Home Page
 
 /**
  * ===================================
