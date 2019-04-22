@@ -4,11 +4,27 @@ class Home extends React.Component {
 
   render() {
 
-    let activities = this.props.activities.map((activity) => {
-      return (
-        <div>{activity.description}</div>
-      )
-    })
+    let activities = this.props.activities
+      .sort(this.props.activities.date)
+      .reverse()
+      .map(activity => {
+        return (
+          <div>
+            <b>
+              {new Intl.DateTimeFormat("en-GB", {
+                weekday: "long"
+              }).format(activity.date)}{" "}
+            </b>
+            {activity.description}{" "}
+            <a
+              class="btn btn-success btn-sm"
+              href={`/activities/${activity.id}/edit`}
+            >
+              Edit workout
+            </a>
+          </div>
+        );
+      });
 
     return (
       <html>
@@ -16,35 +32,27 @@ class Home extends React.Component {
           <div className="container">
             <div className="row">
               <h1> My Gym Planner</h1>
-              <div class="col-1" />
+          
               <a
-                class="btn btn-primary btn-md col-2"
+                class="btn btn-primary btn-sm col-2"
                 href="/activities/new"
               >
                 Add new workout
               </a>
               <a
-                class="btn btn-success btn-md col-2"
-                href="/activities/edit"
+                class="btn btn-warning btn-sm col-2"
+                href="/activities/delete"
               >
-                Edit workout
+                Delete workout
               </a>
-              <a class="btn btn-danger btn-md col-2" href="/login">
+              <a class="btn btn-danger btn-sm col-2" href="/login">
                 Log Out
               </a>
             </div>
 
             <div className="row col-lg-6 ">
               <dl>
-                <dt>
-                  {" "}
-                  <u>Monday</u>{" "}
-                </dt>
                 <dd> {activities}</dd>
-                <dt>
-                  <u>Tuesday</u>
-                </dt>
-                <dd>{activities}</dd>
               </dl>
             </div>
           </div>

@@ -140,13 +140,12 @@ app.post("/activities/new", (request, response) => {
   });
 });
 
-//Edit Form Page **NEED  TO FIND OUT SYNTAX 
-app.post("/activities/edit", (request, response) => {
-  console.log(request.body);
-
-  let query = "UPDATE activities (description, date) VALUES ($1, $2)";
-
-  const values = [request.body.description, request.body.date];
+//Edit Form Page 
+app.post("/activities/:id/edit", (request, response) => {
+  const values = [request.body.description, request.body.date, request.params.id];
+  const query = `UPDATE activities
+                    SET description = $1, date = $2
+                    WHERE id = $3 RETURNING *`;
 
   pool.query(query, values, (errorObj, result) => {
     if (errorObj) {
@@ -166,7 +165,7 @@ app.post("/activities/edit", (request, response) => {
 
 app.get('/home', (request, response) => {
   let query =
-    "SELECT * FROM activities";
+    "SELECT * FROM activities ORDER BY date ASC";
 
   pool.query(query, (errorObj, result) => {
     response.render("home", {
@@ -186,10 +185,10 @@ app.get('/login', (request, response) => {
 app.get("/activities/new", (request, response) => {
   response.render('new');
 });
-app.get("/activities/edit", (request, response) => {
+app.get("/activities/:id/edit", (request, response) => {
   response.render("edit");
 });
-app.delete("/pokemon/:id", (request, response) => {
+app.delete("/activities/:id", (request, response) => {
   response.render("delete");
 });
 

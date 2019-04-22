@@ -17,6 +17,7 @@ class Registration extends React.Component {
         </head>
         <div className="col-md-6 offset-md-5">
           <body>
+            <img src="./images/logo.png" />
             <h1>Registration</h1>
 
             <form method="POST" action="/registration">
@@ -30,10 +31,7 @@ class Registration extends React.Component {
               />{" "}
               <br />
               <br />
-              <input
-                type="submit"
-                class="btn btn-primary col-md-3 "
-              />
+              <input type="submit" class="btn btn-primary col-md-3 " />
             </form>
           </body>
         </div>

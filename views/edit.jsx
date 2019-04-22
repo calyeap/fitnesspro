@@ -5,7 +5,7 @@ var Form = require('./form');
 class Edit extends React.Component {
   render() {
     return (
-      <DefaultLayout title="Edit Activity">
+      <DefaultLayout title="Edit Activity" action={`/activities/:id`}>
         <div className="col-lg-6 offset-lg-3">
           <Form header="Edit an activity">
           </Form>

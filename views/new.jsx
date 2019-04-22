@@ -7,7 +7,7 @@ class New extends React.Component {
     return (
       <DefaultLayout title="New Activity">
         <div className="col-lg-6 offset-lg-3">
-          <Form header="Add a new activity">
+          <Form header="Add a new activity" action="/activities/new">
           </Form>
          
         </div>
