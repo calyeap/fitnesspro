@@ -243,6 +243,12 @@ app.delete("/activities/:id", (request, response) => {
   response.render("delete");
 });
 
+app.get('/logout', (request, response) => {
+    response.cookie('currentUser', null);
+    response.cookie('loggedIn', false);
+    response.render('login');
+});
+
 // handle requests
 
 
