@@ -3,11 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "babel-preset-react": "^6.24.1",
     "body-parser": "^1.18.3",
@@ -22,8 +17,7 @@
     "react-bootstrap-table": "^4.3.1",
     "react-dom": "^16.8.6",
     "typeface-roboto": "0.0.54"
-  }
-}
+  },
   "engines" : {
   "node" : "^6.6.0"
   },
@@ -32,14 +26,14 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/calyeap/fitnesspro"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/calyeap/fitnesspro/issues"
-  },
-  "homepage": "https://github.com/calyeap/fitnesspro#readme"
+"repository": {
+   "type": "git",
+   "url": "git+https://github.com/calyeap/fitnesspro.git"
+ },
+ "author": "",
+ "license": "ISC",
+ "bugs": {
+   "url": "https://github.com/calyeap/fitnesspro/issues"
+ },
+ "homepage": "https://github.com/calyeap/fitnesspro#readme"
 }
