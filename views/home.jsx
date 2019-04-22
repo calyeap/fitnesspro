@@ -58,7 +58,7 @@ class Home extends React.Component {
                 </div>
 
                     <a
-                    class="btn btn-primary btn-sm col-3"
+                    class="btn btn-success btn-sm col-3"
                     href="/activities/new"
                     >
                     Add new workout
