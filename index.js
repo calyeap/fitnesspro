@@ -35,6 +35,7 @@ app.use(
 );
 
 app.use(methodOverride("_method"));
+app.use(express.static('public'));
 
 // Set react-views to be the default view engine
 const reactEngine = require("express-react-views").createEngine();
@@ -90,39 +91,21 @@ app.post("/login", (request, response) => {
       // name is correct
       if (sha256(request.body.password) === result.rows[0].password) {
         // password is correct
+        response.cookie('currentUser',request.body.username)
         response.cookie("loggedIn", true);
         response.redirect("/home");
-      } else {
-        response.send("password was wrong");
-      }
-    } else {
-      response.send("User or password was not found!");
+        }else{
+          response.render('login',{donald:'trump'});
+        }
+
+    }else{
+      response.render('login',{donald:'trump'});
     }
   });
 });
 
 //Home Page
 app.post("/home", (request, response) => {
-  console.log(request.body);
-
-  let query = "INSERT INTO activities (name, date) VALUES ($1, $2)";
-
-  const values = [request.body.name, request.body.date];
-
-  pool.query(query, values, (errorObj, result) => {
-    if (errorObj) {
-      console.log("Something went wrong!");
-      console.log(errorObj);
-    }
-
-    console.log("Query done");
-    response.redirect("/home");
-  });
-});
-
-
-//New Form Page
-app.post("/activities/new", (request, response) => {
   console.log(request.body);
 
   let query = "INSERT INTO activities (description, date) VALUES ($1, $2)";
@@ -140,12 +123,32 @@ app.post("/activities/new", (request, response) => {
   });
 });
 
-//Edit Form Page 
-app.post("/activities/:id/edit", (request, response) => {
-  const values = [request.body.description, request.body.date, request.params.id];
-  const query = `UPDATE activities
-                    SET description = $1, date = $2
-                    WHERE id = $3 RETURNING *`;
+//Delete
+app.delete("/home/deleteRow/:id", (request, response) => {
+  console.log(request.params);
+
+  let query = `DELETE FROM activities WHERE id=${request.params.id}`;
+
+  pool.query(query, (errorObj, result) => {
+    if (errorObj) {
+      console.log("REEEEELETED");
+      console.log(errorObj);
+    }
+
+    console.log("Entry has been deleted");
+    response.redirect("/home");
+  });
+});
+
+
+
+//New Form Page
+app.post("/activities/new", (request, response) => {
+  console.log(request.body);
+
+  let query = "INSERT INTO activities (description, date, username) VALUES ($1, $2, $3)";
+
+  const values = [request.body.description, request.body.date, request.body.username];
 
   pool.query(query, values, (errorObj, result) => {
     if (errorObj) {
@@ -157,6 +160,61 @@ app.post("/activities/:id/edit", (request, response) => {
     response.redirect("/home");
   });
 });
+
+//Edit Form Page 
+app.post("/activities/:id/edit", (request, response) => {
+  const values = [request.body.description, request.body.date, request.body.username, request.params.id];
+  const query = `UPDATE activities
+                    SET description = $1, date = $2, username = $3
+                    WHERE id = $4 RETURNING *`;
+
+  pool.query(query, values, (errorObj, result) => {
+    if (errorObj) {
+      console.log("Something went wrong!");
+      console.log(errorObj);
+    }
+
+    console.log("Query done");
+    response.redirect("/home");
+  });
+});
+
+//Tick
+app.put('/activities/changeTick/:id/:completion', (request, response) => {
+
+    console.log(request.params)
+
+    const newData = request.params.completion == '❌' ? true : false;
+
+    let query = `UPDATE activities SET completion = ${newData} WHERE id = ${request.params.id}`;
+
+    pool.query(query, (errorObj, result) => {
+
+    if( errorObj ){
+      console.log( "REEEEEAID");
+      console.log( errorObj );
+    }
+
+    console.log("Workout completed");
+    response.redirect('/home');
+  });
+
+})
+
+const activitiesInfo = (user, response) => {
+console.log(user)
+  const queryStr = `SELECT * FROM activities WHERE username = '${user}' ORDER BY id ASC`
+
+  pool.query(queryStr,(err,res)=>{
+    if(err){
+      console.log("Something went wrong!!!!");
+      console.log(err);
+    }
+
+  response.render('home',{activities:res.rows})
+  })
+}
+
 /**
  * ===================================
  * Routes
@@ -164,14 +222,7 @@ app.post("/activities/:id/edit", (request, response) => {
  */
 
 app.get('/home', (request, response) => {
-  let query =
-    "SELECT * FROM activities ORDER BY date ASC";
-
-  pool.query(query, (errorObj, result) => {
-    response.render("home", {
-      activities: result.rows
-    });
-  });
+activitiesInfo(request.cookies.currentUser,response);
 });
 
 app.get('/registration', (request, response) => {

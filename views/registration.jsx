@@ -12,12 +12,14 @@ class Registration extends React.Component {
             integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
             crossorigin="anonymous"
           />
+          <link rel="stylesheet" href="/style.css"></link>
 
           <title>Registration</title>
         </head>
+
         <div className="col-md-6 offset-md-5">
           <body>
-            <img src="./images/logo.png" />
+            
             <h1>Registration</h1>
 
             <form method="POST" action="/registration">

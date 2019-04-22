@@ -1,5 +1,6 @@
 var React = require('react');
 var DefaultLayout = require('./layouts/default');
+
 class Login extends React.Component {
     render(){
       return (
@@ -8,7 +9,6 @@ class Login extends React.Component {
         //use tuner assignment to add form in
       <DefaultLayout title="Login">
       <div className="col-md-3 offset-md-5">
-      <img src="./images/logo.png"></img>
       </div>
         <div className="col-md-3 offset-md-5">
           <form action="/login" method="POST">
