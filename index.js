@@ -78,33 +78,86 @@ app.post('/registration', (request, response) => {
 });
 
 //LOGIN//
-    console.log( request.body );
+app.post("/login", (request, response) => {
+  console.log(request.body);
 
-
-  let query = "SELECT * FROM users WHERE username ='"+request.body.username+"'";
+  let query =
+    "SELECT * FROM users WHERE username ='" + request.body.username + "'";
 
   pool.query(query, (errorObj, result) => {
-
-    console.log( result.rows );
-    if( result.rows.length >= 1){
+    console.log(result.rows);
+    if (result.rows.length >= 1) {
       // name is correct
-        if( sha256(request.body.password) === result.rows[0].password ){
-          // password is correct
-          response.cookie('loggedIn', true);
-          response.redirect('/home');
-
-        }else{
-          response.send('password was wrong');
-        }
-
-    }else{
-      response.send('User or password was not found!');
+      if (sha256(request.body.password) === result.rows[0].password) {
+        // password is correct
+        response.cookie("loggedIn", true);
+        response.redirect("/home");
+      } else {
+        response.send("password was wrong");
+      }
+    } else {
+      response.send("User or password was not found!");
     }
   });
 });
 
 //Home Page
+app.post("/home", (request, response) => {
+  console.log(request.body);
 
+  let query = "INSERT INTO activities (name, date) VALUES ($1, $2)";
+
+  const values = [request.body.name, request.body.date];
+
+  pool.query(query, values, (errorObj, result) => {
+    if (errorObj) {
+      console.log("Something went wrong!");
+      console.log(errorObj);
+    }
+
+    console.log("Query done");
+    response.redirect("/home");
+  });
+});
+
+
+//New Form Page
+app.post("/activities/new", (request, response) => {
+  console.log(request.body);
+
+  let query = "INSERT INTO activities (description, date) VALUES ($1, $2)";
+
+  const values = [request.body.description, request.body.date];
+
+  pool.query(query, values, (errorObj, result) => {
+    if (errorObj) {
+      console.log("Something went wrong!");
+      console.log(errorObj);
+    }
+
+    console.log("Query done");
+    response.redirect("/home");
+  });
+});
+
+//Edit Form Page **NEED  TO FIND OUT SYNTAX 
+app.post("/activities/edit", (request, response) => {
+  console.log(request.body);
+
+  let query = "UPDATE activities (description, date) VALUES ($1, $2)";
+
+  const values = [request.body.description, request.body.date];
+
+  pool.query(query, values, (errorObj, result) => {
+    if (errorObj) {
+      console.log("Something went wrong!");
+      console.log(errorObj);
+    }
+
+    console.log("Query done");
+    response.redirect("/home");
+  });
+});
 /**
  * ===================================
  * Routes
@@ -112,7 +165,14 @@ app.post('/registration', (request, response) => {
  */
 
 app.get('/home', (request, response) => {
-    response.render('home');
+  let query =
+    "SELECT * FROM activities";
+
+  pool.query(query, (errorObj, result) => {
+    response.render("home", {
+      activities: result.rows
+    });
+  });
 });
 
 app.get('/registration', (request, response) => {
@@ -121,6 +181,16 @@ app.get('/registration', (request, response) => {
 
 app.get('/login', (request, response) => {
   response.render('login');
+});
+
+app.get("/activities/new", (request, response) => {
+  response.render('new');
+});
+app.get("/activities/edit", (request, response) => {
+  response.render("edit");
+});
+app.delete("/pokemon/:id", (request, response) => {
+  response.render("delete");
 });
 
 // handle requests

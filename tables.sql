@@ -10,8 +10,8 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS activities (
   id SERIAL PRIMARY KEY,
   user_id INTEGER,
-  username TEXT,
+  description TEXT,
   date DATE NOT NULL,
-  completed BOOLEAN
+  completion BOOLEAN
 );
---psql -d fitness -u cyeap -f tables.sql
+--psql -d fitness -U cyeap -f tables.sql
