@@ -19,7 +19,7 @@ class Registration extends React.Component {
 
         <div className="col-md-6 offset-md-5">
           <body>
-            
+            <img src="/logo.png"></img>
             <h1>Registration</h1>
 
             <form method="POST" action="/registration">

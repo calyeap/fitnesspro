@@ -72,9 +72,9 @@ class Home extends React.Component {
                   <div class= "row col-lg-12 col-md-12 col-sm-12 justify-content-center">
                 <table id = "workoutTable">
                   <tr>
-                    <th>Date</th>
+                    <th>Day</th>
                     <th>Description</th>
-                    <th>Completion</th>
+                    <th>Status</th>
                   </tr> 
                   {activities}
                 </table>

@@ -9,6 +9,7 @@ class Login extends React.Component {
         //use tuner assignment to add form in
       <DefaultLayout title="Login">
       <div className="col-md-3 offset-md-5">
+          <img src = "/logo.png"></img>
       </div>
         <div className="col-md-3 offset-md-5">
           <form action="/login" method="POST">
