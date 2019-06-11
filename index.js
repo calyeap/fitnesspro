@@ -57,7 +57,7 @@ app.use(
 );
 
 app.use(methodOverride("_method"));
-app.use(express.static("public"));
+app.use(express.static("/"));
 
 // Set react-views to be the default view engine
 const reactEngine = require("express-react-views").createEngine();
@@ -69,6 +69,8 @@ app.engine("jsx", reactEngine);
 const sha256 = require("js-sha256");
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
+
+app.use(express.static("public"));
 
 /*
  * ===========================================
@@ -123,6 +125,7 @@ app.post("/login", (request, response) => {
     }
   });
 });
+
 
 //Home Page
 app.post("/home", (request, response) => {
@@ -247,6 +250,10 @@ const activitiesInfo = (user, response) => {
  * Routes
  * ===================================
  */
+
+ app.get("/", (request, response) => {
+   response.redirect("login");
+ });
 
 app.get("/home", (request, response) => {
   activitiesInfo(request.cookies.currentUser, response);
