@@ -248,7 +248,7 @@ const activitiesInfo = (user, response) => {
  * ===================================
  */
 
-app.get("/", (request, response) => {
+app.get("/home", (request, response) => {
   activitiesInfo(request.cookies.currentUser, response);
 });
 
